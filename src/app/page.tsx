@@ -2,31 +2,7 @@ import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
-import dynamic from "next/dynamic";
-
-// Import Map component dynamically to avoid SSR issues
-const Map = dynamic(() => import("@/components/ui/map").then(mod => mod.Map), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full bg-muted flex items-center justify-center">
-      <p className="text-muted-foreground">Loading map...</p>
-    </div>
-  )
-});
-
-// Sample charging stations data
-const demoStations = [
-  { lng: -118.2437, lat: 34.0522, popup: "ChargePoint Station #1" },
-  { lng: -122.4194, lat: 37.7749, popup: "Tesla Supercharger" },
-  { lng: -74.0060, lat: 40.7128, popup: "EVgo Fast Charging" },
-  { lng: -87.6298, lat: 41.8781, popup: "Electrify America" },
-  { lng: -77.0369, lat: 38.9072, popup: "PLUGGIST Station" },
-];
-
-// Map wrapper for home page
-function MapWrapper() {
-  return <Map initialZoom={3.5} markers={demoStations} />;
-}
+import { HomeMapWrapper } from "@/components/ui/map-wrapper";
 
 export default function HomePage() {
   return (
@@ -57,7 +33,7 @@ export default function HomePage() {
                 {/* Map with demo markers */}
                 <div className="absolute inset-0">
                   {/* We'll use dynamic import to avoid server-side rendering issues */}
-                  <MapWrapper />
+                  <HomeMapWrapper />
                 </div>
               </div>
             </div>
