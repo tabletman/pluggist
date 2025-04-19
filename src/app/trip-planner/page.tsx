@@ -1,6 +1,10 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
+import { VehicleSelector } from "@/components/trip-planner/vehicle-selector";
+import { LocationInputs } from "@/components/trip-planner/location-inputs";
+import { PreferenceOptions } from "@/components/trip-planner/preference-options";
+import { TripMap } from "@/components/trip-planner/trip-map";
 
 export default function TripPlannerPage() {
   return (
@@ -18,113 +22,17 @@ export default function TripPlannerPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-1">
                 <div className="bg-card rounded-lg shadow-sm p-4 space-y-6">
-                  <div>
-                    <label htmlFor="start" className="block text-sm font-medium mb-1">
-                      Starting Point
-                    </label>
-                    <input
-                      type="text"
-                      id="start"
-                      placeholder="Enter address, city, or zip code"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    />
-                  </div>
+                  <LocationInputs />
                   
-                  <div>
-                    <label htmlFor="destination" className="block text-sm font-medium mb-1">
-                      Destination
-                    </label>
-                    <input
-                      type="text"
-                      id="destination"
-                      placeholder="Enter address, city, or zip code"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    />
-                  </div>
+                  <VehicleSelector />
                   
-                  <div>
-                    <label htmlFor="vehicle" className="block text-sm font-medium mb-1">
-                      Vehicle Model
-                    </label>
-                    <select
-                      id="vehicle"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    >
-                      <option value="">Select your vehicle</option>
-                      <option value="tesla_model_3">Tesla Model 3</option>
-                      <option value="tesla_model_y">Tesla Model Y</option>
-                      <option value="chevy_bolt">Chevrolet Bolt</option>
-                      <option value="nissan_leaf">Nissan Leaf</option>
-                      <option value="ford_mach_e">Ford Mustang Mach-E</option>
-                      <option value="hyundai_ioniq5">Hyundai IONIQ 5</option>
-                      <option value="kia_ev6">Kia EV6</option>
-                      <option value="vw_id4">Volkswagen ID.4</option>
-                      <option value="custom">Custom Range...</option>
-                    </select>
-                  </div>
-                  
-                  <div id="customRangeSection" className="hidden">
-                    <label htmlFor="customRange" className="block text-sm font-medium mb-1">
-                      Custom Range (miles)
-                    </label>
-                    <input
-                      type="number"
-                      id="customRange"
-                      placeholder="Enter range in miles"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    />
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium mb-2">Charging Preferences</h3>
-                    <div className="space-y-2">
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" defaultChecked />
-                        <span className="text-sm">DC Fast Charging</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" defaultChecked />
-                        <span className="text-sm">Level 2 Charging</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">Tesla Superchargers Only</span>
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium mb-2">Additional Options</h3>
-                    <div className="space-y-2">
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" defaultChecked />
-                        <span className="text-sm">Prioritize highly rated stations</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" defaultChecked />
-                        <span className="text-sm">Include amenities (food, restrooms)</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">Avoid highways</span>
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <Button className="w-full">Plan My Trip</Button>
+                  <PreferenceOptions />
                 </div>
               </div>
               
               <div className="lg:col-span-2">
                 <div className="bg-card rounded-lg shadow-sm overflow-hidden">
-                  <div className="h-[600px] bg-muted flex items-center justify-center">
-                    <div className="text-center p-8">
-                      <h3 className="text-xl font-medium mb-2">Trip Map</h3>
-                      <p className="text-muted-foreground">
-                        Your route with charging stops will appear here after planning
-                      </p>
-                    </div>
-                  </div>
+                  <TripMap />
                 </div>
               </div>
             </div>
