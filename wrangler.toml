@@ -1,0 +1,9 @@
+name = "chargelocator"
+main = "src/app/counter.ts"
+compatibility_date = "2023-12-01"
+
+# Uncomment to enable D1 database
+[[d1_databases]]
+binding = "DB"                # Environment variable name
+database_name = "chargelocator-db"    # Database name
+database_id = "local"         # ID for local development
