@@ -11,6 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         '/private/',
       ],
     },
-    sitemap: 'https://chargelocator.com/sitemap.xml',
+    sitemap: 'https://pluggist.com/sitemap.xml',
   };
 }

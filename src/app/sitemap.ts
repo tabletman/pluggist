@@ -11,7 +11,7 @@ const getStations = async () => {
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://chargelocator.com';
+  const baseUrl = 'https://pluggist.com';
   
   // Core pages
   const staticPages = [
