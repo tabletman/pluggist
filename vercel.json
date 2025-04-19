@@ -1,8 +1,8 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm install --no-frozen-lockfile && pnpm build",
+  "buildCommand": "pnpm build",
   "devCommand": "pnpm dev",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "installCommand": "pnpm install --no-frozen-lockfile && npm install -g pnpm",
   "outputDirectory": ".next",
   "regions": ["iad1"],
   "git": {
