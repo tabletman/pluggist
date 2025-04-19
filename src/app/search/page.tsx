@@ -1,6 +1,51 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
+
+// Import Map component dynamically to avoid SSR issues
+const Map = dynamic(() => import("@/components/ui/map").then(mod => mod.Map), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-muted flex items-center justify-center">
+      <p className="text-muted-foreground">Loading map...</p>
+    </div>
+  )
+});
+
+// Sample charging stations data with more detail
+const searchStations = [
+  { 
+    lng: -118.2437, 
+    lat: 34.0522, 
+    popup: "<b>ChargePoint Station #1</b><br/>4 chargers available<br/>CCS, CHAdeMO" 
+  },
+  { 
+    lng: -118.3027, 
+    lat: 34.0624, 
+    popup: "<b>Tesla Supercharger</b><br/>8 chargers available<br/>Tesla" 
+  },
+  { 
+    lng: -118.3812, 
+    lat: 34.0744, 
+    popup: "<b>EVgo Fast Charging</b><br/>2 chargers available<br/>CCS, CHAdeMO" 
+  },
+  { 
+    lng: -118.2200, 
+    lat: 34.0700, 
+    popup: "<b>Electrify America</b><br/>6 chargers available<br/>CCS, CHAdeMO" 
+  },
+  { 
+    lng: -118.2900, 
+    lat: 34.0300, 
+    popup: "<b>PLUGGIST Station</b><br/>3 chargers available<br/>J1772, CCS" 
+  },
+];
+
+// Map wrapper for search page (zoomed in more on LA area)
+function SearchMapWrapper() {
+  return <Map initialLat={34.0522} initialLng={-118.2437} initialZoom={10} markers={searchStations} />;
+}
 
 export default function SearchPage() {
   return (
@@ -87,13 +132,8 @@ export default function SearchPage() {
                 </div>
               </div>
               <div className="flex-[2] bg-card rounded-lg shadow-sm overflow-hidden">
-                <div className="h-[600px] bg-muted flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <h3 className="text-xl font-medium mb-2">Interactive Map</h3>
-                    <p className="text-muted-foreground">
-                      Map will display charging stations based on your search criteria
-                    </p>
-                  </div>
+                <div className="h-[600px]">
+                  <SearchMapWrapper />
                 </div>
               </div>
             </div>

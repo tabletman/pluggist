@@ -2,6 +2,31 @@ import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
+
+// Import Map component dynamically to avoid SSR issues
+const Map = dynamic(() => import("@/components/ui/map").then(mod => mod.Map), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-muted flex items-center justify-center">
+      <p className="text-muted-foreground">Loading map...</p>
+    </div>
+  )
+});
+
+// Sample charging stations data
+const demoStations = [
+  { lng: -118.2437, lat: 34.0522, popup: "ChargePoint Station #1" },
+  { lng: -122.4194, lat: 37.7749, popup: "Tesla Supercharger" },
+  { lng: -74.0060, lat: 40.7128, popup: "EVgo Fast Charging" },
+  { lng: -87.6298, lat: 41.8781, popup: "Electrify America" },
+  { lng: -77.0369, lat: 38.9072, popup: "PLUGGIST Station" },
+];
+
+// Map wrapper for home page
+function MapWrapper() {
+  return <Map initialZoom={3.5} markers={demoStations} />;
+}
 
 export default function HomePage() {
   return (
@@ -28,10 +53,11 @@ export default function HomePage() {
                   </Button>
                 </div>
               </div>
-              <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden bg-muted">
-                {/* Placeholder for map or image */}
-                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                  Interactive Map Preview
+              <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden">
+                {/* Map with demo markers */}
+                <div className="absolute inset-0">
+                  {/* We'll use dynamic import to avoid server-side rendering issues */}
+                  <MapWrapper />
                 </div>
               </div>
             </div>
