@@ -2,8 +2,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { SearchMapWrapper } from "@/components/ui/map-wrapper";
-import { SearchFilters } from "@/components/search/search-filters";
-import { LocationInput } from "@/components/search/location-input";
+import { SearchFiltersContainer } from "@/components/search/search-filters-container";
 
 export default function SearchPage() {
   return (
@@ -15,13 +14,7 @@ export default function SearchPage() {
             <h1 className="text-3xl font-bold mb-4">Find EV Charging Stations</h1>
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
-                <LocationInput />
-                <SearchFilters 
-                  onApplyFilters={(filters) => {
-                    // Will be implemented when connected to actual data
-                    console.log("Applied filters:", filters);
-                  }} 
-                />
+                <SearchFiltersContainer />
               </div>
               <div className="flex-[2] bg-card rounded-lg shadow-sm overflow-hidden">
                 <div className="h-[600px]">

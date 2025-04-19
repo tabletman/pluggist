@@ -8,7 +8,10 @@ const Map = dynamic(() => import("@/components/ui/map").then(mod => mod.Map), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full bg-muted flex items-center justify-center">
-      <p className="text-muted-foreground">Loading map...</p>
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary mx-auto mb-2"></div>
+        <p className="text-muted-foreground">Loading map...</p>
+      </div>
     </div>
   )
 });
@@ -21,9 +24,22 @@ interface HomeMapWrapperProps {
 export function HomeMapWrapper({ className = "" }: HomeMapWrapperProps) {
   // Use client-side only rendering to prevent hydration mismatches
   const [isClient, setIsClient] = useState(false);
+  const [hasError, setHasError] = useState(false);
   
   useEffect(() => {
     setIsClient(true);
+    
+    // Add error handling for map loading
+    const handleError = () => {
+      console.error("Map failed to load");
+      setHasError(true);
+    };
+    
+    window.addEventListener('error', handleError);
+    
+    return () => {
+      window.removeEventListener('error', handleError);
+    };
   }, []);
   
   // Sample charging stations data
@@ -35,15 +51,36 @@ export function HomeMapWrapper({ className = "" }: HomeMapWrapperProps) {
     { lng: -77.0369, lat: 38.9072, popup: "PLUGGIST Station" },
   ];
 
-  // Only render the map on the client side
+  // Loading state
   if (!isClient) {
     return (
       <div className={`w-full h-full bg-muted flex items-center justify-center ${className}`}>
-        <p className="text-muted-foreground">Loading map...</p>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary mx-auto mb-2"></div>
+          <p className="text-muted-foreground">Loading map...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  // Error state
+  if (hasError) {
+    return (
+      <div className={`w-full h-full bg-muted flex items-center justify-center ${className}`}>
+        <div className="text-center p-4">
+          <p className="text-red-500 mb-2">Failed to load the map. Please try refreshing the page.</p>
+          <button 
+            className="px-4 py-2 bg-primary text-white rounded-md" 
+            onClick={() => window.location.reload()}
+          >
+            Refresh Page
+          </button>
+        </div>
       </div>
     );
   }
 
+  // Render the map
   return <Map initialZoom={3.5} markers={demoStations} className={className} />;
 }
 
@@ -51,9 +88,22 @@ export function HomeMapWrapper({ className = "" }: HomeMapWrapperProps) {
 export function SearchMapWrapper({ className = "" }: HomeMapWrapperProps) {
   // Use client-side only rendering to prevent hydration mismatches
   const [isClient, setIsClient] = useState(false);
+  const [hasError, setHasError] = useState(false);
   
   useEffect(() => {
     setIsClient(true);
+    
+    // Add error handling for map loading
+    const handleError = () => {
+      console.error("Map failed to load");
+      setHasError(true);
+    };
+    
+    window.addEventListener('error', handleError);
+    
+    return () => {
+      window.removeEventListener('error', handleError);
+    };
   }, []);
   
   // Sample charging stations data with more detail
@@ -85,11 +135,31 @@ export function SearchMapWrapper({ className = "" }: HomeMapWrapperProps) {
     },
   ];
 
-  // Only render the map on the client side
+  // Loading state
   if (!isClient) {
     return (
       <div className={`w-full h-full bg-muted flex items-center justify-center ${className}`}>
-        <p className="text-muted-foreground">Loading map...</p>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary mx-auto mb-2"></div>
+          <p className="text-muted-foreground">Loading map...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  // Error state
+  if (hasError) {
+    return (
+      <div className={`w-full h-full bg-muted flex items-center justify-center ${className}`}>
+        <div className="text-center p-4">
+          <p className="text-red-500 mb-2">Failed to load the map. Please try refreshing the page.</p>
+          <button 
+            className="px-4 py-2 bg-primary text-white rounded-md" 
+            onClick={() => window.location.reload()}
+          >
+            Refresh Page
+          </button>
+        </div>
       </div>
     );
   }

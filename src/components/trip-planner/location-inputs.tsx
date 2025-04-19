@@ -2,12 +2,37 @@
 
 import { useState, useEffect } from "react";
 
-export function LocationInputs() {
+export interface LocationData {
+  start: string;
+  destination: string;
+}
+
+interface LocationInputsProps {
+  onChange: (locations: LocationData) => void;
+}
+
+export function LocationInputs({ onChange }: LocationInputsProps) {
   const [isClient, setIsClient] = useState(false);
+  const [locations, setLocations] = useState<LocationData>({
+    start: "",
+    destination: ""
+  });
   
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newLocations = { ...locations, start: e.target.value };
+    setLocations(newLocations);
+    onChange(newLocations);
+  };
+
+  const handleDestinationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newLocations = { ...locations, destination: e.target.value };
+    setLocations(newLocations);
+    onChange(newLocations);
+  };
 
   // Only render the loading placeholder during SSR
   if (!isClient) {
@@ -36,6 +61,8 @@ export function LocationInputs() {
           id="start"
           placeholder="Enter address, city, or zip code"
           className="w-full px-3 py-2 border rounded-md text-sm"
+          value={locations.start}
+          onChange={handleStartChange}
         />
       </div>
       
@@ -48,6 +75,8 @@ export function LocationInputs() {
           id="destination"
           placeholder="Enter address, city, or zip code"
           className="w-full px-3 py-2 border rounded-md text-sm"
+          value={locations.destination}
+          onChange={handleDestinationChange}
         />
       </div>
     </div>

@@ -2,6 +2,64 @@
 
 import { useState, useEffect } from "react";
 
+export interface VehicleData {
+  modelId: string;
+  modelName: string;
+  customRange: number | null;
+}
+
+interface VehicleSelectorProps {
+  onChange: (vehicle: VehicleData) => void;
+}
+
+// Static data mapping vehicle IDs to ranges in miles
+export const vehicleRanges: Record<string, number> = {
+  tesla_model_3: 272,
+  tesla_model_y: 330,
+  tesla_model_s: 405,
+  tesla_model_x: 348,
+  tesla_cybertruck: 340,
+  chevy_bolt_ev: 259,
+  chevy_bolt_euv: 247,
+  chevy_blazer_ev: 320,
+  chevy_silverado_ev: 400,
+  chevy_equinox_ev: 300,
+  ford_mach_e: 314,
+  ford_f150_lightning: 320,
+  ford_e_transit: 126,
+  hyundai_ioniq5: 303,
+  hyundai_ioniq6: 361,
+  hyundai_kona_ev: 258,
+  kia_ev6: 310,
+  kia_niro_ev: 253,
+  kia_ev9: 304,
+  vw_id4: 275,
+  vw_id_buzz: 260,
+  nissan_leaf: 212,
+  nissan_ariya: 304,
+  bmw_i4: 301,
+  bmw_i7: 318,
+  bmw_ix: 324,
+  bmw_i5: 295,
+  audi_etron: 222,
+  audi_etron_gt: 238,
+  audi_q4_etron: 241,
+  audi_q8_etron: 285,
+  mercedes_eqs: 350,
+  mercedes_eqe: 305,
+  mercedes_eqb: 243,
+  mercedes_eqa: 250,
+  lucid_air: 516,
+  rivian_r1t: 328,
+  rivian_r1s: 316,
+  polestar_2: 270,
+  polestar_3: 300,
+  volvo_c40: 226,
+  volvo_xc40: 223,
+  volvo_ex30: 275,
+  volvo_ex90: 300,
+};
+
 // Comprehensive list of EVs organized by manufacturer
 const vehicleOptions = [
   {
@@ -126,29 +184,53 @@ const vehicleOptions = [
   }
 ];
 
-export function VehicleSelector() {
+export function VehicleSelector({ onChange }: VehicleSelectorProps) {
   const [isClient, setIsClient] = useState(false);
   const [showCustomRange, setShowCustomRange] = useState(false);
+  const [vehicle, setVehicle] = useState<VehicleData>({
+    modelId: "",
+    modelName: "",
+    customRange: null
+  });
   
   useEffect(() => {
     setIsClient(true);
-    
-    // Show/hide custom range field when "Custom Range" is selected
-    const vehicleSelect = document.getElementById('vehicle') as HTMLSelectElement;
-    const customRangeSection = document.getElementById('customRangeSection');
-    
-    if (vehicleSelect && customRangeSection) {
-      vehicleSelect.addEventListener('change', function() {
-        if (this.value === 'custom') {
-          customRangeSection.classList.remove('hidden');
-          setShowCustomRange(true);
-        } else {
-          customRangeSection.classList.add('hidden');
-          setShowCustomRange(false);
-        }
-      });
-    }
   }, []);
+
+  const handleVehicleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const modelId = e.target.value;
+    let modelName = "";
+    
+    // Find the model name from the selected option
+    if (modelId) {
+      for (const category of vehicleOptions) {
+        const foundModel = category.models.find(model => model.id === modelId);
+        if (foundModel) {
+          modelName = `${category.manufacturer} ${foundModel.name}`;
+          break;
+        }
+      }
+    }
+    
+    const showCustom = modelId === 'custom';
+    setShowCustomRange(showCustom);
+    
+    const newVehicle = {
+      modelId,
+      modelName,
+      customRange: null
+    };
+    
+    setVehicle(newVehicle);
+    onChange(newVehicle);
+  };
+  
+  const handleCustomRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const customRange = e.target.value ? parseInt(e.target.value, 10) : null;
+    const newVehicle = { ...vehicle, customRange };
+    setVehicle(newVehicle);
+    onChange(newVehicle);
+  };
 
   // Only render the loading placeholder during SSR
   if (!isClient) {
@@ -168,6 +250,8 @@ export function VehicleSelector() {
       <select
         id="vehicle"
         className="w-full px-3 py-2 border rounded-md text-sm"
+        value={vehicle.modelId}
+        onChange={handleVehicleChange}
       >
         <option value="">Select your vehicle</option>
         {vehicleOptions.map((category) => (
@@ -181,8 +265,8 @@ export function VehicleSelector() {
         ))}
       </select>
       
-      <div id="customRangeSection" className={showCustomRange ? "" : "hidden"}>
-        <div className="mt-4">
+      {showCustomRange && (
+        <div id="customRangeSection" className="mt-4">
           <label htmlFor="customRange" className="block text-sm font-medium mb-1">
             Custom Range (miles)
           </label>
@@ -191,9 +275,11 @@ export function VehicleSelector() {
             id="customRange"
             placeholder="Enter range in miles"
             className="w-full px-3 py-2 border rounded-md text-sm"
+            value={vehicle.customRange || ""}
+            onChange={handleCustomRangeChange}
           />
         </div>
-      </div>
+      )}
     </div>
   );
 }
