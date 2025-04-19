@@ -68,20 +68,39 @@ pnpm dev
 
 ### Deploying to Vercel
 
-1. Push your code to a GitHub repository
+1. Push your code to a GitHub repository:
+   ```bash
+   git add .
+   git commit -m "Prepare for Vercel deployment"
+   git push origin main
+   ```
 
 2. Import your project in Vercel:
    - Go to [vercel.com](https://vercel.com)
    - Click "Add New" → "Project"
    - Connect to your GitHub repository
-   - Configure project settings
-   - Deploy
+   - Select "Next.js" as the framework preset
+   - Keep the default build settings
 
-3. Set up environment variables in Vercel dashboard
+3. Set up environment variables in Vercel dashboard:
+   - NEXTAUTH_SECRET (generate a secure random string)
+   - NEXTAUTH_URL (set to your domain, e.g., https://pluggist.com)
+   - GOOGLE_CLIENT_ID (optional for OAuth)
+   - GOOGLE_CLIENT_SECRET (optional for OAuth)
 
-4. Connect your custom domain
+4. Connect your custom domain:
+   - Go to "Settings" → "Domains"
+   - Add your domain "pluggist.com"
+   - Follow Vercel's instructions for DNS configuration
+   - Verify domain ownership
+   - Enable HTTPS
 
-For detailed deployment instructions, see the [deployment guide](/deployment/deployment_guide.md).
+5. Check deployment status:
+   - Vercel will automatically deploy when you push changes to your repository
+   - View deployment logs in the Vercel dashboard
+   - Use preview deployments for testing changes before merging to main
+
+For local development, always use `.env.local` for environment variables and remember that these values won't be committed to the repository.
 
 ## Monetization Strategies
 

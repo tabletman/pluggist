@@ -16,8 +16,11 @@ const handler = NextAuth({
           return null;
         }
 
-        // Mock user for demonstration purposes
-        if (credentials.email === "user@example.com" && credentials.password === "password") {
+        // DEVELOPMENT ONLY: Mock user for demonstration purposes
+        // TODO: Replace with actual database authentication before production
+        if (process.env.NODE_ENV !== "production" && 
+            credentials.email === "user@example.com" && 
+            credentials.password === "password") {
           return {
             id: "user_1",
             name: "Demo User",
@@ -30,8 +33,8 @@ const handler = NextAuth({
       }
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "mock-client-id",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "mock-client-secret",
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
   ],
   session: {
@@ -57,7 +60,7 @@ const handler = NextAuth({
     signIn: "/login",
     error: "/login",
   },
-  secret: process.env.NEXTAUTH_SECRET || "your-secret-key-change-in-production",
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
