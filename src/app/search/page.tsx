@@ -2,6 +2,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { SearchMapWrapper } from "@/components/ui/map-wrapper";
+import { SearchFilters } from "@/components/search/search-filters";
+import { LocationInput } from "@/components/search/location-input";
 
 export default function SearchPage() {
   return (
@@ -13,79 +15,13 @@ export default function SearchPage() {
             <h1 className="text-3xl font-bold mb-4">Find EV Charging Stations</h1>
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
-                <div className="bg-card rounded-lg shadow-sm p-4">
-                  <div className="mb-4">
-                    <label htmlFor="location" className="block text-sm font-medium mb-1">
-                      Location
-                    </label>
-                    <input
-                      type="text"
-                      id="location"
-                      placeholder="Enter address, city, or zip code"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-sm font-medium mb-2">Connector Types</h3>
-                    <div className="grid grid-cols-2 gap-2">
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">CCS</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">CHAdeMO</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">J1772</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">Tesla</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-sm font-medium mb-2">Charging Speed</h3>
-                    <div className="space-y-2">
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">Level 1 (120V)</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">Level 2 (240V)</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">DC Fast Charging</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <h3 className="text-sm font-medium mb-2">Amenities</h3>
-                    <div className="grid grid-cols-2 gap-2">
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">Restrooms</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">Food</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">WiFi</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span className="text-sm">24/7 Access</span>
-                      </label>
-                    </div>
-                  </div>
-                  <Button className="w-full">Apply Filters</Button>
-                </div>
+                <LocationInput />
+                <SearchFilters 
+                  onApplyFilters={(filters) => {
+                    // Will be implemented when connected to actual data
+                    console.log("Applied filters:", filters);
+                  }} 
+                />
               </div>
               <div className="flex-[2] bg-card rounded-lg shadow-sm overflow-hidden">
                 <div className="h-[600px]">

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Import Map component dynamically to avoid SSR issues
@@ -18,6 +19,13 @@ interface HomeMapWrapperProps {
 }
 
 export function HomeMapWrapper({ className = "" }: HomeMapWrapperProps) {
+  // Use client-side only rendering to prevent hydration mismatches
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   // Sample charging stations data
   const demoStations = [
     { lng: -118.2437, lat: 34.0522, popup: "ChargePoint Station #1" },
@@ -27,11 +35,27 @@ export function HomeMapWrapper({ className = "" }: HomeMapWrapperProps) {
     { lng: -77.0369, lat: 38.9072, popup: "PLUGGIST Station" },
   ];
 
+  // Only render the map on the client side
+  if (!isClient) {
+    return (
+      <div className={`w-full h-full bg-muted flex items-center justify-center ${className}`}>
+        <p className="text-muted-foreground">Loading map...</p>
+      </div>
+    );
+  }
+
   return <Map initialZoom={3.5} markers={demoStations} className={className} />;
 }
 
 // For search page map
 export function SearchMapWrapper({ className = "" }: HomeMapWrapperProps) {
+  // Use client-side only rendering to prevent hydration mismatches
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   // Sample charging stations data with more detail
   const searchStations = [
     { 
@@ -60,6 +84,15 @@ export function SearchMapWrapper({ className = "" }: HomeMapWrapperProps) {
       popup: "<b>PLUGGIST Station</b><br/>3 chargers available<br/>J1772, CCS" 
     },
   ];
+
+  // Only render the map on the client side
+  if (!isClient) {
+    return (
+      <div className={`w-full h-full bg-muted flex items-center justify-center ${className}`}>
+        <p className="text-muted-foreground">Loading map...</p>
+      </div>
+    );
+  }
 
   return (
     <Map 

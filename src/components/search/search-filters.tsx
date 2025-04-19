@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 
 interface SearchFiltersProps {
@@ -15,6 +17,7 @@ export interface FilterOptions {
 }
 
 export function SearchFilters({ onApplyFilters }: SearchFiltersProps) {
+  const [isClient, setIsClient] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     connectorTypes: [],
     chargingSpeed: [],
@@ -23,6 +26,11 @@ export function SearchFilters({ onApplyFilters }: SearchFiltersProps) {
     availability: false,
     minRating: 0
   });
+  
+  // Set isClient to true on the client-side to avoid hydration mismatch
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleConnectorTypeChange = (type: string) => {
     setFilters(prev => {
@@ -86,6 +94,24 @@ export function SearchFilters({ onApplyFilters }: SearchFiltersProps) {
       minRating: 0
     });
   };
+
+  // Use a loading/skeleton state for server-side rendering
+  if (!isClient) {
+    return (
+      <div className="bg-card rounded-lg shadow-sm p-4 animate-pulse">
+        <div className="h-8 bg-muted rounded mb-4"></div>
+        <div className="h-20 bg-muted rounded mb-4"></div>
+        <div className="h-20 bg-muted rounded mb-4"></div>
+        <div className="h-20 bg-muted rounded mb-4"></div>
+        <div className="h-8 bg-muted rounded mb-4"></div>
+        <div className="h-12 bg-muted rounded mb-4"></div>
+        <div className="flex space-x-2">
+          <div className="h-10 bg-primary/20 rounded flex-1"></div>
+          <div className="h-10 bg-muted rounded flex-1"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-card rounded-lg shadow-sm p-4">
