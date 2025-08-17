@@ -1,440 +1,399 @@
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { Button } from "@/components/ui/button";
+'use client';
+
+import { useState } from 'react';
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, TrendingUp, Users, DollarSign, Zap, Store, QrCode, BarChart } from 'lucide-react';
 
 export default function ForBusinessPage() {
+  const [formData, setFormData] = useState({
+    businessName: '',
+    contactName: '',
+    email: '',
+    phone: '',
+    businessType: '',
+    location: '',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+    alert('Thank you for your interest! We\'ll contact you within 24 hours.');
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
+      
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-primary text-primary-foreground py-16">
+        <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl font-bold tracking-tight mb-4">
-                Grow Your Business with PLUGGIST
+              <Badge className="mb-4 bg-white/20 text-white border-white/30">
+                Partner Program Now Open
+              </Badge>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                Reach 50+ Premium Customers Daily While They Charge
               </h1>
-              <p className="text-xl mb-8 opacity-90">
-                Connect with EV drivers and increase visibility for your charging stations. 
-                Our premium business solutions help you reach more customers and grow your revenue.
+              <p className="text-xl mb-8 text-white/90">
+                EV drivers spend 15-45 minutes at charging stations. Turn their wait time into your opportunity with exclusive deals delivered by our AI assistant.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="secondary" asChild>
-                  <a href="#premium-listings">Premium Listings</a>
+                <Button size="lg" variant="secondary">
+                  Start Free Trial
                 </Button>
-                <Button size="lg" variant="outline" className="bg-transparent text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
-                  <a href="#claim-listing">Claim Your Listing</a>
+                <Button size="lg" variant="outline" className="bg-white/10 text-white border-white hover:bg-white/20">
+                  View Demo
                 </Button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Benefits Section */}
+        {/* Stats Section */}
+        <section className="py-12 bg-muted/50">
+          <div className="container">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-3xl font-bold text-primary">$150k+</div>
+                <p className="text-sm text-muted-foreground">Avg. EV Owner Income</p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-primary">30 min</div>
+                <p className="text-sm text-muted-foreground">Avg. Charging Time</p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-primary">35%</div>
+                <p className="text-sm text-muted-foreground">Deal Redemption Rate</p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-primary">4.8/5</div>
+                <p className="text-sm text-muted-foreground">Partner Satisfaction</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
         <section className="py-16">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">
-              Why Partner with PLUGGIST?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-card rounded-lg p-6 shadow-sm text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Increased Visibility</h3>
-                <p className="text-muted-foreground">
-                  Get your charging stations in front of thousands of EV drivers actively looking for places to charge.
-                </p>
-              </div>
-              <div className="bg-card rounded-lg p-6 shadow-sm text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="M12 20V10"></path>
-                    <path d="M18 20V4"></path>
-                    <path d="M6 20v-4"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Detailed Analytics</h3>
-                <p className="text-muted-foreground">
-                  Gain insights into how users interact with your listings, including views, direction requests, and more.
-                </p>
-              </div>
-              <div className="bg-card rounded-lg p-6 shadow-sm text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                    <path d="M17 9V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
-                    <circle cx="9" cy="13" r="1"></circle>
-                    <circle cx="13" cy="13" r="1"></circle>
-                    <path d="M21 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3H17"></path>
-                    <path d="M19 8v1"></path>
-                    <path d="M19 15v1"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Revenue Growth</h3>
-                <p className="text-muted-foreground">
-                  Increase station utilization and revenue by reaching EV drivers when they need charging the most.
-                </p>
-              </div>
+            <h2 className="text-3xl font-bold text-center mb-12">How Pluggist Works for Your Business</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card>
+                <CardHeader>
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                    <Zap className="w-6 h-6 text-primary" />
+                  </div>
+                  <CardTitle>1. Driver Starts Charging</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    When an EV driver plugs in at a nearby station, our ChargePal AI activates and engages them in conversation.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                    <QrCode className="w-6 h-6 text-primary" />
+                  </div>
+                  <CardTitle>2. AI Presents Your Deal</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Based on the driver's preferences and your targeting, ChargePal presents your exclusive offer with a QR code.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                    <Store className="w-6 h-6 text-primary" />
+                  </div>
+                  <CardTitle>3. Customer Visits & Redeems</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Driver walks to your business, shows the QR code, and redeems the deal. You track everything in real-time.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
 
-        {/* Premium Listings Section */}
-        <section id="premium-listings" className="py-16 bg-primary/5">
+        {/* Pricing */}
+        <section className="py-16 bg-muted/30">
           <div className="container">
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Premium Listing Plans</h2>
-              <p className="text-lg text-muted-foreground">
-                Choose the right plan to showcase your charging stations and reach more EV drivers.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Basic Plan */}
-              <div className="bg-card rounded-lg shadow-sm overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Basic</h3>
-                  <div className="text-3xl font-bold mb-1">$29<span className="text-lg font-normal text-muted-foreground">/month</span></div>
-                  <p className="text-sm text-muted-foreground mb-6">per station</p>
-                  <ul className="space-y-3 mb-6">
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Enhanced visibility in search results</span>
+            <h2 className="text-3xl font-bold text-center mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Start with a free trial. Pay only for results. No setup fees, no hidden costs.
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Starter</CardTitle>
+                  <div className="text-3xl font-bold">$299<span className="text-base font-normal">/month</span></div>
+                  <CardDescription>Perfect for single locations</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Up to 100 deals/month</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Business profile management</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Basic analytics</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Basic analytics dashboard</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>QR code redemption</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
                       <span>Email support</span>
                     </li>
                   </ul>
-                  <Button className="w-full">Get Started</Button>
-                </div>
-              </div>
-
-              {/* Premium Plan */}
-              <div className="bg-card rounded-lg shadow-md overflow-hidden border-2 border-primary relative">
-                <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-3 py-1 text-sm font-medium">
-                  Most Popular
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Premium</h3>
-                  <div className="text-3xl font-bold mb-1">$79<span className="text-lg font-normal text-muted-foreground">/month</span></div>
-                  <p className="text-sm text-muted-foreground mb-6">per station</p>
-                  <ul className="space-y-3 mb-6">
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Featured placement in search results</span>
+                  <Button className="w-full mt-6">Start Free Trial</Button>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-primary">
+                <CardHeader>
+                  <Badge className="mb-2">Most Popular</Badge>
+                  <CardTitle>Growth</CardTitle>
+                  <div className="text-3xl font-bold">$599<span className="text-base font-normal">/month</span></div>
+                  <CardDescription>For growing businesses</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Unlimited deals</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Custom branding and promotional badges</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Advanced analytics</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Advanced analytics dashboard</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>A/B testing</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Review management tools</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Priority support</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Priority email and phone support</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Custom targeting</span>
                     </li>
                   </ul>
-                  <Button className="w-full">Get Started</Button>
-                </div>
-              </div>
-
-              {/* Enterprise Plan */}
-              <div className="bg-card rounded-lg shadow-sm overflow-hidden">
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Enterprise</h3>
-                  <div className="text-3xl font-bold mb-1">Custom<span className="text-lg font-normal text-muted-foreground"> pricing</span></div>
-                  <p className="text-sm text-muted-foreground mb-6">for charging networks</p>
-                  <ul className="space-y-3 mb-6">
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>All Premium features</span>
+                  <Button className="w-full mt-6">Start Free Trial</Button>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle>Enterprise</CardTitle>
+                  <div className="text-3xl font-bold">Custom</div>
+                  <CardDescription>For chains & franchises</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Multiple locations</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>API integration for real-time updates</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>API access</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>Bulk station management</span>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>Custom integrations</span>
                     </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>White-label solutions</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 mr-2 mt-1">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
                       <span>Dedicated account manager</span>
                     </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <span>SLA guarantee</span>
+                    </li>
                   </ul>
-                  <Button className="w-full">Contact Sales</Button>
-                </div>
-              </div>
+                  <Button className="w-full mt-6" variant="outline">Contact Sales</Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
 
-        {/* Claim Listing Section */}
-        <section id="claim-listing" className="py-16">
+        {/* Success Stories */}
+        <section className="py-16">
           <div className="container">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-4">Claim Your Listing</h2>
-                <p className="text-lg text-muted-foreground">
-                  Already have a charging station listed on PLUGGIST? Claim your listing to gain control over your business information.
-                </p>
-              </div>
-              
-              <div className="bg-card rounded-lg shadow-sm p-6">
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="businessName" className="block text-sm font-medium mb-1">
-                      Business Name
-                    </label>
-                    <input
-                      type="text"
-                      id="businessName"
-                      placeholder="Enter your business name"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="stationAddress" className="block text-sm font-medium mb-1">
-                      Station Address
-                    </label>
-                    <input
-                      type="text"
-                      id="stationAddress"
-                      placeholder="Enter the station address"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    />
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Success Stories</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-lg italic mb-4">
+                    "We've seen a 25% increase in lunch traffic since partnering with Pluggist. The EV drivers are exactly our target demographic - professionals who appreciate quality."
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-muted rounded-full" />
                     <div>
-                      <label htmlFor="contactName" className="block text-sm font-medium mb-1">
-                        Contact Name
-                      </label>
-                      <input
-                        type="text"
-                        id="contactName"
-                        placeholder="Your full name"
-                        className="w-full px-3 py-2 border rounded-md text-sm"
-                      />
+                      <p className="font-semibold">Sarah Chen</p>
+                      <p className="text-sm text-muted-foreground">Owner, Fusion Bistro</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-lg italic mb-4">
+                    "The ROI is incredible. We're spending $599/month and generating over $8,000 in additional revenue from Pluggist customers."
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-muted rounded-full" />
+                    <div>
+                      <p className="font-semibold">Mike Rodriguez</p>
+                      <p className="text-sm text-muted-foreground">Manager, Quick Mart</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form */}
+        <section className="py-16 bg-muted/30">
+          <div className="container">
+            <div className="max-w-2xl mx-auto">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Start Your Free Trial</CardTitle>
+                  <CardDescription>
+                    No credit card required. Get set up in 5 minutes.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="businessName">Business Name</Label>
+                        <Input
+                          id="businessName"
+                          value={formData.businessName}
+                          onChange={(e) => setFormData({...formData, businessName: e.target.value})}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="contactName">Contact Name</Label>
+                        <Input
+                          id="contactName"
+                          value={formData.contactName}
+                          onChange={(e) => setFormData({...formData, contactName: e.target.value})}
+                          required
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="businessType">Business Type</Label>
+                        <Select 
+                          value={formData.businessType} 
+                          onValueChange={(value) => setFormData({...formData, businessType: value})}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="restaurant">Restaurant</SelectItem>
+                            <SelectItem value="retail">Retail Store</SelectItem>
+                            <SelectItem value="grocery">Grocery</SelectItem>
+                            <SelectItem value="entertainment">Entertainment</SelectItem>
+                            <SelectItem value="service">Service Business</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="location">Location/City</Label>
+                        <Input
+                          id="location"
+                          value={formData.location}
+                          onChange={(e) => setFormData({...formData, location: e.target.value})}
+                          placeholder="e.g., Cleveland, OH"
+                          required
+                        />
+                      </div>
                     </div>
                     
                     <div>
-                      <label htmlFor="contactEmail" className="block text-sm font-medium mb-1">
-                        Contact Email
-                      </label>
-                      <input
-                        type="email"
-                        id="contactEmail"
-                        placeholder="Your email address"
-                        className="w-full px-3 py-2 border rounded-md text-sm"
+                      <Label htmlFor="message">Message (Optional)</Label>
+                      <Textarea
+                        id="message"
+                        value={formData.message}
+                        onChange={(e) => setFormData({...formData, message: e.target.value})}
+                        placeholder="Tell us about your business and goals..."
+                        rows={4}
                       />
                     </div>
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="verificationDetails" className="block text-sm font-medium mb-1">
-                      Verification Details
-                    </label>
-                    <textarea
-                      id="verificationDetails"
-                      rows={3}
-                      placeholder="Please provide details that can help us verify you are the owner of this charging station"
-                      className="w-full px-3 py-2 border rounded-md text-sm"
-                    ></textarea>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <input
-                      type="checkbox"
-                      id="termsAgreement"
-                      className="mt-1 mr-2"
-                    />
-                    <label htmlFor="termsAgreement" className="text-sm">
-                      I confirm that I am authorized to claim this listing and agree to the <a href="/terms" className="text-primary hover:underline">Terms of Service</a> and <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a>.
-                    </label>
-                  </div>
-                  
-                  <Button className="w-full">Submit Claim Request</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="py-16 bg-primary/5">
-          <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-12">
-              What Our Business Partners Say
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-card rounded-lg p-6 shadow-sm">
-                <div className="flex items-center space-x-1 mb-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg
-                      key={star}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-yellow-500"
-                    >
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  "Since listing our charging stations on PLUGGIST, we've seen a 40% increase in utilization. The platform's visibility and user-friendly interface have been game-changers for our business."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-muted mr-3"></div>
-                  <div>
-                    <div className="font-medium">Sarah Johnson</div>
-                    <div className="text-sm text-muted-foreground">EcoCharge Network</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-card rounded-lg p-6 shadow-sm">
-                <div className="flex items-center space-x-1 mb-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg
-                      key={star}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-yellow-500"
-                    >
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  "The analytics dashboard provides invaluable insights into how EV drivers interact with our stations. This data has helped us optimize our offerings and improve customer satisfaction."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-muted mr-3"></div>
-                  <div>
-                    <div className="font-medium">Michael Chen</div>
-                    <div className="text-sm text-muted-foreground">GreenWatt Charging</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-card rounded-lg p-6 shadow-sm">
-                <div className="flex items-center space-x-1 mb-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg
-                      key={star}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill={star <= 4 ? "currentColor" : "none"}
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-yellow-500"
-                    >
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  "As a small business owner with just two charging stations, I was hesitant about the investment. But the increased foot traffic and additional sales in our cafe have more than paid for the premium listing."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-muted mr-3"></div>
-                  <div>
-                    <div className="font-medium">Emma Rodriguez</div>
-                    <div className="text-sm text-muted-foreground">Volt Cafe</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">Ready to Grow Your Charging Business?</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Join thousands of charging station operators who trust PLUGGIST to connect them with EV drivers.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg">Get Started</Button>
-                <Button size="lg" variant="outline">Contact Sales</Button>
-              </div>
+                    
+                    <Button type="submit" className="w-full" size="lg">
+                      Start Free Trial
+                    </Button>
+                    
+                    <p className="text-sm text-center text-muted-foreground">
+                      By submitting, you agree to our Terms of Service and Privacy Policy
+                    </p>
+                  </form>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
       </main>
+      
       <Footer />
     </div>
   );
