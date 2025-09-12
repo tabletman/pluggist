@@ -28,11 +28,13 @@ export function SearchContent() {
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setUserLocation({
+          const location = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
-          });
+          };
+          setUserLocation(location);
           setLoadingLocation(false);
+          console.log('Got user location:', location);
         },
         (error) => {
           let errorMessage = 'Unable to get your location.';

@@ -10,7 +10,20 @@ import Script from "next/script";
 
 export default function HomePage() {
   const handleEmergencyClick = () => {
-    trackEmergencySearch();
+    // Get actual user location for tracking
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          trackEmergencySearch({ 
+            lat: position.coords.latitude, 
+            lng: position.coords.longitude 
+          });
+        },
+        () => {
+          trackEmergencySearch(); // Track even if location fails
+        }
+      );
+    }
     trackEvent('emergency_button_click', {
       page_location: window.location.href,
       button_text: 'FIND CHARGING NEAR ME NOW'

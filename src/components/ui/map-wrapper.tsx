@@ -85,7 +85,12 @@ export function HomeMapWrapper({ className = "" }: HomeMapWrapperProps) {
 }
 
 // For search page map
-export function SearchMapWrapper({ className = "" }: HomeMapWrapperProps) {
+interface SearchMapWrapperProps {
+  className?: string;
+  userLocation?: { lat: number; lng: number } | null;
+}
+
+export function SearchMapWrapper({ className = "", userLocation = null }: SearchMapWrapperProps) {
   // Use client-side only rendering to prevent hydration mismatches
   const [isClient, setIsClient] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -166,10 +171,11 @@ export function SearchMapWrapper({ className = "" }: HomeMapWrapperProps) {
 
   return (
     <Map 
-      initialLat={34.0522} 
-      initialLng={-118.2437} 
-      initialZoom={10} 
+      initialLat={userLocation?.lat || 41.4993}  // Cleveland, Ohio as default
+      initialLng={userLocation?.lng || -81.6944}  // Cleveland, Ohio as default
+      initialZoom={userLocation ? 12 : 10} 
       markers={searchStations} 
+      userLocation={userLocation}
       className={className}
     />
   );
