@@ -2,11 +2,22 @@
   "name": "pluggist",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    ".",
+    "worker"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:worker": "opennextjs-cloudflare",
+    "preview": "opennextjs-cloudflare && wrangler dev",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
+    "mcp:install": "cd mcp-server && npm install",
+    "mcp:start": "cd mcp-server && npm start",
+    "deploy": "npm run build && npm run build:worker && wrangler deploy",
+    "deploy:preview": "npm run build && npm run build:worker && wrangler deploy --env preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -59,13 +70,15 @@
     "@supabase/supabase-js": "^2.39.3",
     "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/auth-helpers-react": "^0.4.2",
-    "stripe": "^17.4.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "@eslint/eslintrc": "^3",
+    "@opennextjs/cloudflare": "^0.3.8",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -73,6 +86,9 @@
     "eslint-config-next": "15.1.4",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  }
+    "turbo": "^2.3.3",
+    "typescript": "^5",
+    "wrangler": "^3.102.0"
+  },
+  "packageManager": "pnpm@10.0.0-rc.2+sha512.b6e59b96f90ca92449ac2f6dca9b430880448fc97d21f0fa9200e3d5ddb5289ad535255400554f7f3486e2d60058492161aaa9b58828e81f50c096718be9d156"
 }
