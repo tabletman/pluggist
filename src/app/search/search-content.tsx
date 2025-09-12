@@ -145,7 +145,7 @@ export function SearchContent() {
                           )}
                         </div>
                       </div>
-                      <p className="text-muted-foreground mb-2">123 Electric Avenue, EV City, CA 90210</p>
+                      <p className="text-muted-foreground mb-2">123 Electric Avenue, Cleveland, OH 44114</p>
                       <div className="flex items-center space-x-1 mb-2">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <svg

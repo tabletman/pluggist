@@ -89,26 +89,27 @@ export function PlannerContainer() {
       // This is where we'd normally get the markers from an API
       // For now, we'll generate them based on city coordinates
       const cityCoordinates: Record<string, { lat: number; lng: number }> = {
-        "San Francisco, CA": { lat: 37.7749, lng: -122.4194 },
-        "Los Angeles, CA": { lat: 34.0522, lng: -118.2437 },
-        "New York, NY": { lat: 40.7128, lng: -74.0060 },
+        "Cleveland, OH": { lat: 41.4993, lng: -81.6944 },
+        "Columbus, OH": { lat: 39.9612, lng: -82.9988 },
+        "Cincinnati, OH": { lat: 39.1031, lng: -84.5120 },
         "Chicago, IL": { lat: 41.8781, lng: -87.6298 },
-        "Houston, TX": { lat: 29.7604, lng: -95.3698 },
-        "Phoenix, AZ": { lat: 33.4484, lng: -112.0740 },
-        "Seattle, WA": { lat: 47.6062, lng: -122.3321 },
-        "Denver, CO": { lat: 39.7392, lng: -104.9903 },
-        "Dallas, TX": { lat: 32.7767, lng: -96.7970 },
-        "Miami, FL": { lat: 25.7617, lng: -80.1918 },
+        "Detroit, MI": { lat: 42.3314, lng: -83.0458 },
+        "Pittsburgh, PA": { lat: 40.4406, lng: -79.9959 },
+        "Indianapolis, IN": { lat: 39.7684, lng: -86.1581 },
+        "Milwaukee, WI": { lat: 43.0389, lng: -87.9065 },
+        "Buffalo, NY": { lat: 42.8864, lng: -78.8784 },
+        "Toledo, OH": { lat: 41.6528, lng: -83.5379 },
       };
       
       // Predefined charging stations between certain cities
       const chargingStations: Record<string, Array<{ lat: number; lng: number; name: string }>> = {
-        "San Francisco-Los Angeles": [
-          { lat: 37.0058, lng: -121.5669, name: "Tesla Supercharger - Gilroy, CA" },
-          { lat: 35.9774, lng: -118.8860, name: "Tesla Supercharger - Tejon Ranch, CA" },
+        "Cleveland-Columbus": [
+          { lat: 41.1314, lng: -81.8648, name: "Tesla Supercharger - Medina, OH" },
+          { lat: 40.8973, lng: -82.3225, name: "ChargePoint - Mansfield, OH" },
         ],
-        "New York-Chicago": [
-          { lat: 41.0339, lng: -80.7598, name: "Tesla Supercharger - Cleveland, OH" },
+        "Cleveland-Chicago": [
+          { lat: 41.4528, lng: -82.1818, name: "Tesla Supercharger - Elyria, OH" },
+          { lat: 41.5868, lng: -83.6282, name: "Electrify America - Toledo, OH" },
           { lat: 41.7128, lng: -86.2486, name: "EVgo Fast Charging - South Bend, IN" },
         ],
         "Seattle-Denver": [
