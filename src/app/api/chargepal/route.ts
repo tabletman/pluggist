@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase, dbUtils } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 // This API route now integrates with Supabase for real data
 
@@ -13,15 +13,16 @@ export async function POST(request: NextRequest) {
     const actualUserId = userId || user?.id;
 
     // Log the interaction if we have a session
-    if (sessionId && actualUserId) {
-      await dbUtils.logAIInteraction(
-        sessionId,
-        actualUserId,
-        'user',
-        message,
-        categorizeMessage(message)
-      );
-    }
+    // TODO: Implement dbUtils
+    // if (sessionId && actualUserId) {
+    //   await dbUtils.logAIInteraction(
+    //     sessionId,
+    //     actualUserId,
+    //     'user',
+    //     message,
+    //     categorizeMessage(message)
+    //   );
+    // }
 
     // Get response based on message category
     const category = categorizeMessage(message);
@@ -30,7 +31,8 @@ export async function POST(request: NextRequest) {
 
     if (category === 'deals' || message.toLowerCase().includes('deal')) {
       // Fetch real deals from Supabase
-      deals = await dbUtils.getActiveDeals(stationId, actualUserId);
+      // TODO: Implement dbUtils.getActiveDeals
+      // deals = await dbUtils.getActiveDeals(stationId, actualUserId);
       
       responseMessage = deals && deals.length > 0
         ? `I found ${deals.length} exclusive deals near your charging station! These are specially curated for EV drivers like you. Each deal is valid for the next few hours - perfect timing for your charging session.`
@@ -40,16 +42,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Log AI response
-    if (sessionId && actualUserId) {
-      await dbUtils.logAIInteraction(
-        sessionId,
-        actualUserId,
-        'assistant',
-        responseMessage,
-        category,
-        deals?.map(d => d.id)
-      );
-    }
+    // TODO: Implement dbUtils
+    // if (sessionId && actualUserId) {
+    //   await dbUtils.logAIInteraction(
+    //     sessionId,
+    //     actualUserId,
+    //     'assistant',
+    //     responseMessage,
+    //     category,
+    //     deals?.map(d => d.id)
+    //   );
+    // }
 
     // Track analytics event
     if (actualUserId) {
