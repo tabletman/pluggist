@@ -1,0 +1,28 @@
+{
+  "name": "pluggist-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Pluggist EV Charging Station Directory",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@supabase/supabase-js": "^2.39.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "ev-charging",
+    "pluggist",
+    "supabase"
+  ],
+  "author": "BP Tech Solutions",
+  "license": "MIT"
+}
