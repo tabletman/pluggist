@@ -1,0 +1,131 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/dist/mcpb-manifest.schema.json",
+  "manifest_version": "0.1",
+  "name": "pluggist-unified",
+  "display_name": "Pluggist - EV Charging Station Directory",
+  "version": "0.1.0",
+  "description": "Comprehensive EV charging station directory with AI-powered assistance for finding stations, checking availability, and discovering nearby deals",
+  "long_description": "Pluggist is a full-stack web application that serves as a comprehensive directory for electric vehicle charging stations. It features real-time station data, availability checking, trip planning, and exclusive deals from nearby businesses. The MCP server component provides AI assistants with tools to help EV drivers find charging stations, check availability, start charging sessions, and discover local deals and amenities.\n\nBuilt with Next.js 15, TypeScript, Tailwind CSS, and Supabase, Pluggist offers a modern, responsive experience for EV drivers and charging station operators alike.",
+  "author": {
+    "name": "BP Tech Solutions",
+    "email": "bp@example.com",
+    "url": "https://github.com/tabletman"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tabletman/pluggist"
+  },
+  "homepage": "https://pluggist.com",
+  "documentation": "https://github.com/tabletman/pluggist/blob/main/README.md",
+  "support": "https://github.com/tabletman/pluggist/issues",
+  "server": {
+    "type": "node",
+    "entry_point": "mcp-server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/mcp-server/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "SUPABASE_URL": "${user_config.supabase_url}",
+        "SUPABASE_ANON_KEY": "${user_config.supabase_anon_key}",
+        "NEXTAUTH_URL": "${user_config.app_url}",
+        "NEXTAUTH_SECRET": "${user_config.auth_secret}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "find_charging_stations",
+      "description": "Find EV charging stations near a specific location with filtering options"
+    },
+    {
+      "name": "check_availability",
+      "description": "Check real-time availability and status of charging connectors at a station"
+    },
+    {
+      "name": "start_charging_session",
+      "description": "Initiate a charging session and receive personalized recommendations"
+    },
+    {
+      "name": "get_nearby_deals",
+      "description": "Discover exclusive deals and offers from businesses near charging stations"
+    },
+    {
+      "name": "plan_trip",
+      "description": "Plan EV trips with optimal charging stops and route suggestions"
+    }
+  ],
+  "tools_generated": true,
+  "keywords": [
+    "electric-vehicle",
+    "ev-charging",
+    "charging-stations",
+    "trip-planner",
+    "real-time-data",
+    "deals",
+    "automotive",
+    "sustainability",
+    "travel"
+  ],
+  "license": "MIT",
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "user_config": {
+    "supabase_url": {
+      "type": "string",
+      "title": "Supabase Project URL",
+      "description": "Your Supabase project URL (e.g., https://your-project.supabase.co)",
+      "required": true,
+      "sensitive": false
+    },
+    "supabase_anon_key": {
+      "type": "string", 
+      "title": "Supabase Anon Key",
+      "description": "Your Supabase anonymous key for public API access",
+      "required": true,
+      "sensitive": true
+    },
+    "app_url": {
+      "type": "string",
+      "title": "Application URL",
+      "description": "The URL where your Pluggist app is deployed",
+      "default": "https://pluggist.com",
+      "required": false
+    },
+    "auth_secret": {
+      "type": "string",
+      "title": "NextAuth Secret",
+      "description": "Secret key for NextAuth.js session encryption (generate with: openssl rand -base64 32)",
+      "required": true,
+      "sensitive": true
+    },
+    "google_client_id": {
+      "type": "string",
+      "title": "Google OAuth Client ID",
+      "description": "Google OAuth client ID for authentication",
+      "required": false,
+      "sensitive": false
+    },
+    "google_client_secret": {
+      "type": "string",
+      "title": "Google OAuth Client Secret", 
+      "description": "Google OAuth client secret for authentication",
+      "required": false,
+      "sensitive": true
+    },
+    "enable_debug": {
+      "type": "boolean",
+      "title": "Enable Debug Mode",
+      "description": "Enable detailed logging for troubleshooting",
+      "default": false,
+      "required": false
+    }
+  }
+}
