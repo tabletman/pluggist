@@ -20,18 +20,25 @@ export default function HomePage() {
                 <p className="text-xl text-muted-foreground">
                   Locate reliable EV charging stations with real-time availability, reviews, and amenities. Plan your trips with confidence.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" asChild className="bg-green-600 hover:bg-green-700">
-                    <Link href="/charging?station=tesla-van-aken">
-                      ✨ Try ChargePal AI Demo
+                <div className="flex flex-col gap-4">
+                  <Button size="lg" asChild className="bg-red-600 hover:bg-red-700 text-white font-bold text-xl py-6 px-8">
+                    <Link href="/search?location=current">
+                      🚨 FIND CHARGING NEAR ME NOW
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" asChild>
-                    <Link href="/search">Find Stations</Link>
-                  </Button>
-                  <Button size="lg" variant="outline" asChild>
-                    <Link href="/trip-planner">Plan Trip</Link>
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button size="lg" asChild className="bg-green-600 hover:bg-green-700">
+                      <Link href="/charging?station=tesla-van-aken">
+                        ✨ Try ChargePal AI Demo
+                      </Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link href="/search">Find Stations</Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link href="/trip-planner">Plan Trip</Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
               <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden">
