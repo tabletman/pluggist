@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { SearchMapWrapper } from "@/components/ui/map-wrapper";
 import { SearchFiltersContainer } from "@/components/search/search-filters-container";
 import { Loader2, MapPin } from "lucide-react";
+import AdBanner from "@/components/AdBanner";
 
 export function SearchContent() {
   const searchParams = useSearchParams();
@@ -175,6 +176,8 @@ export function SearchContent() {
             )}
 
             <div className="space-y-4">
+              <AdBanner placement="search_results" userLocation={userLocation} />
+
               {loadingStations && (
                 <div className="text-center text-muted-foreground py-8">Loading stations...</div>
               )}

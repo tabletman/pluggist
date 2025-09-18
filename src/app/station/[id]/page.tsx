@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
+import AdBanner from "@/components/AdBanner";
 
 export default function StationDetailPage({ params }: { params: { id: string } }) {
   // In a real implementation, we would fetch station data based on the ID
@@ -193,6 +194,8 @@ export default function StationDetailPage({ params }: { params: { id: string } }
                 </div>
               </div>
 
+              <AdBanner placement="station_detail" className="mt-2" />
+
               <div className="bg-card rounded-lg p-4 shadow-sm">
                 <h3 className="font-bold mb-2">Operating Hours</h3>
                 <ul className="space-y-1 text-sm">
@@ -239,6 +242,8 @@ export default function StationDetailPage({ params }: { params: { id: string } }
                   </li>
                 </ul>
               </div>
+
+              <AdBanner placement="sidebar" className="mt-2" />
 
               <div className="bg-card rounded-lg p-4 shadow-sm">
                 <h3 className="font-bold mb-2">Report an Issue</h3>
