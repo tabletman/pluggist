@@ -90,7 +90,7 @@ interface SearchMapWrapperProps {
   userLocation?: { lat: number; lng: number } | null;
 }
 
-export function SearchMapWrapper({ className = "", userLocation = null }: SearchMapWrapperProps & { markers?: Array<{ lat: number; lng: number; popup?: string }> }) {
+export function SearchMapWrapper({ className = "", userLocation = null, markers }: SearchMapWrapperProps & { markers?: Array<{ lat: number; lng: number; popup?: string }> }) {
   // Use client-side only rendering to prevent hydration mismatches
   const [isClient, setIsClient] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -174,7 +174,7 @@ export function SearchMapWrapper({ className = "", userLocation = null }: Search
       initialLat={userLocation?.lat || 41.4993}
       initialLng={userLocation?.lng || -81.6944}
       initialZoom={userLocation ? 12 : 10}
-      markers={(arguments[0] as any)?.markers || defaultSearchStations}
+      markers={markers || defaultSearchStations}
       userLocation={userLocation}
       className={className}
     />
