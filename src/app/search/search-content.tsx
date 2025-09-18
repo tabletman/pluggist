@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,9 @@ export function SearchContent() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
+  const [stations, setStations] = useState<any[]>([]);
+  const [loadingStations, setLoadingStations] = useState(false);
+  const [stationsError, setStationsError] = useState<string | null>(null);
 
   useEffect(() => {
     if (location === 'current') {
@@ -55,6 +58,40 @@ export function SearchContent() {
       );
     }
   }, [location]);
+
+  const effectiveCenter = useMemo(() => {
+    const latQ = searchParams.get('lat');
+    const lngQ = searchParams.get('lng');
+    if (userLocation) return userLocation;
+    if (latQ && lngQ) return { lat: parseFloat(latQ), lng: parseFloat(lngQ) };
+    return { lat: 41.4993, lng: -81.6944 }; // Cleveland default
+  }, [searchParams, userLocation]);
+
+  useEffect(() => {
+    async function fetchStations() {
+      setLoadingStations(true);
+      setStationsError(null);
+      try {
+        const params = new URLSearchParams({
+          lat: String(effectiveCenter.lat),
+          lng: String(effectiveCenter.lng),
+          radius: '10',
+          limit: '50'
+        });
+        const res = await fetch(`/api/stations?${params.toString()}`);
+        if (!res.ok) throw new Error(`Failed to load stations (${res.status})`);
+        const data = await res.json();
+        setStations(data.stations || []);
+      } catch (e: any) {
+        setStationsError(e.message || 'Failed to load stations');
+      } finally {
+        setLoadingStations(false);
+      }
+    }
+
+    // Fetch when we have a center (either geolocated or query/default)
+    if (effectiveCenter) fetchStations();
+  }, [effectiveCenter.lat, effectiveCenter.lng]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -101,7 +138,14 @@ export function SearchContent() {
               </div>
               <div className="flex-[2] bg-card rounded-lg shadow-sm overflow-hidden">
                 <div className="h-[600px]">
-                  <SearchMapWrapper userLocation={userLocation} />
+                  <SearchMapWrapper 
+                    userLocation={userLocation}
+                    markers={stations.map((s) => ({
+                      lat: s.latitude,
+                      lng: s.longitude,
+                      popup: `<b>${s.name || 'Charging Station'}</b><br/>${s.address || ''}`
+                    }))}
+                  />
                 </div>
               </div>
             </div>
@@ -124,28 +168,38 @@ export function SearchContent() {
               </div>
             </div>
 
+            {stationsError && (
+              <div className="bg-red-50 p-4 rounded-lg mb-4">
+                <p className="text-red-700">{stationsError}</p>
+              </div>
+            )}
+
             <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-card rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
+              {loadingStations && (
+                <div className="text-center text-muted-foreground py-8">Loading stations...</div>
+              )}
+              {!loadingStations && stations.length === 0 && (
+                <div className="text-center text-muted-foreground py-8">No stations found nearby.</div>
+              )}
+              {stations.map((s, i) => (
+                <div key={s.id || i} className="bg-card rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
                   <div className="flex flex-col md:flex-row gap-4">
                     <div className="md:w-1/4 bg-muted rounded-md h-40 flex items-center justify-center">
-                      <span className="text-muted-foreground">Station Image</span>
+                      <span className="text-muted-foreground">Station</span>
                     </div>
                     <div className="md:w-3/4">
                       <div className="flex justify-between">
-                        <h3 className="text-xl font-bold">
-                          {location === 'current' ? `Emergency Charger #${i}` : `ChargePoint Station #${i}`}
-                        </h3>
+                        <h3 className="text-xl font-bold">{s.name || 'Charging Station'}</h3>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full">Available</span>
-                          {location === 'current' && (
+                          <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full">{s.status || 'Unknown'}</span>
+                          {typeof s.distance !== 'undefined' && (
                             <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full font-bold">
-                              0.{i}mi
+                              {Number(s.distance).toFixed(1)} mi
                             </span>
                           )}
                         </div>
                       </div>
-                      <p className="text-muted-foreground mb-2">123 Electric Avenue, Cleveland, OH 44114</p>
+                      <p className="text-muted-foreground mb-2">{s.address || ''}</p>
                       <div className="flex items-center space-x-1 mb-2">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <svg
@@ -164,91 +218,34 @@ export function SearchContent() {
                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                           </svg>
                         ))}
-                        <span className="text-sm text-muted-foreground">(42 reviews)</span>
+                        <span className="text-sm text-muted-foreground">({s.reviewCount || 0} reviews)</span>
                       </div>
                       <div className="grid grid-cols-2 gap-2 mb-4">
                         <div className="flex items-center space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="text-primary"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                             <path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19"></path>
                             <line x1="23" y1="13" x2="23" y2="11"></line>
                             <polyline points="11 6 7 12 13 12 9 18"></polyline>
                           </svg>
-                          <span className="text-sm">2x CCS, 2x CHAdeMO</span>
+                          <span className="text-sm">{(s.connectors || []).map((c: any) => c.type).filter(Boolean).join(', ') || 'Types unknown'}</span>
                         </div>
                         <div className="flex items-center space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="text-primary"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                           </svg>
                           <span className="text-sm">Open 24/7</span>
                         </div>
-                        <div className="flex items-center space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="text-primary"
-                          >
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                          </svg>
-                          <span className="text-sm">$0.43/kWh</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="text-primary"
-                          >
-                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                            <line x1="6" y1="1" x2="6" y2="4"></line>
-                            <line x1="10" y1="1" x2="10" y2="4"></line>
-                            <line x1="14" y1="1" x2="14" y2="4"></line>
-                          </svg>
-                          <span className="text-sm">Restrooms, Food</span>
-                        </div>
                       </div>
                       <div className="flex space-x-2">
-                        <Button size="sm" className="bg-red-600 hover:bg-red-700">
+                        <Button size="sm" className="bg-red-600 hover:bg-red-700" onClick={() => {
+                          window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(s.latitude + ',' + s.longitude)}`, '_blank');
+                        }}>
                           {location === 'current' ? 'GET DIRECTIONS NOW' : 'View Details'}
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" onClick={() => {
+                          window.open(`https://maps.google.com/?q=${encodeURIComponent(s.latitude + ',' + s.longitude)}`, '_blank');
+                        }}>
                           {location === 'current' ? 'Call Station' : 'Get Directions'}
                         </Button>
                       </div>
