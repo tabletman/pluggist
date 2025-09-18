@@ -90,7 +90,7 @@ interface SearchMapWrapperProps {
   userLocation?: { lat: number; lng: number } | null;
 }
 
-export function SearchMapWrapper({ className = "", userLocation = null }: SearchMapWrapperProps) {
+export function SearchMapWrapper({ className = "", userLocation = null }: SearchMapWrapperProps & { markers?: Array<{ lat: number; lng: number; popup?: string }> }) {
   // Use client-side only rendering to prevent hydration mismatches
   const [isClient, setIsClient] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -112,7 +112,7 @@ export function SearchMapWrapper({ className = "", userLocation = null }: Search
   }, []);
   
   // Sample charging stations data with more detail
-  const searchStations = [
+  const defaultSearchStations = [
     { 
       lng: -81.6944, 
       lat: 41.4993, 
@@ -171,10 +171,10 @@ export function SearchMapWrapper({ className = "", userLocation = null }: Search
 
   return (
     <Map 
-      initialLat={userLocation?.lat || 41.4993}  // Cleveland, Ohio as default
-      initialLng={userLocation?.lng || -81.6944}  // Cleveland, Ohio as default
-      initialZoom={userLocation ? 12 : 10} 
-      markers={searchStations} 
+      initialLat={userLocation?.lat || 41.4993}
+      initialLng={userLocation?.lng || -81.6944}
+      initialZoom={userLocation ? 12 : 10}
+      markers={(arguments[0] as any)?.markers || defaultSearchStations}
       userLocation={userLocation}
       className={className}
     />
